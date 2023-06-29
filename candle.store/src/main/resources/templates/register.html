@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <section id="mainBody">
+    <form
+            method="post"
+            th:action="@{/register/save}"
+            th:object="${user}">
+      <div class="form-group">
+        <label for="exampleInputName">Name</label>
+        <input th:field="*{fullName}" type="text" class="form-control" id="exampleInputName"
+               aria-describedby="nameHelp" placeholder="Enter name">
+      </div>
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('email')}">Email is already in use!</p>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input th:field="*{email}" type="email" class="form-control" id="exampleInputEmail1"
+               aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1"
+               placeholder="Password">
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input th:field="*{confirmPassword}" type="password" class="form-control" id="confirmPassword"
+               placeholder="Confirm Password">
+      </div>
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('confirmPassword')}"> Passwords don't match.</p>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input th:field="*{address}" type="text" class="form-control" id="address"
+               placeholder="Address">
+      </div>
+
+      <label>User role</label>
+
+      <select id="userRole" class="form-control" th:field="*{userRole}">
+        <option th:each="role : ${T(com.candle.store.enums.UserRole).values()}"
+                th:value="${role.name()}" th:text="${role.friendlyName()}"></option>
+      </select>
+
+      <div class="login">
+        <button style=" margin-top: 10px" type="submit"
+                class="btn btn-primary">Register
+        </button>
+        <span>Already registered? <a href="/" th:href="@{/login}">Login
+                             here</a></span>
+
+      </div>
+
+    </form>
+
+  </section>
+</body>
+</html>
