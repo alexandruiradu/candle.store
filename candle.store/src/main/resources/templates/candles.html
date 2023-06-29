@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="mainBody">
+  <div sec:authorize="hasRole('ADMIN')"
+       style="text-align: center; margin: 10px">
+    <a role="button" href="/" th:href="@{/candle}" class="btn btn-primary">Add Candle</a>
+  </div>
+  <table class="table-items">
+    <tbody class="items-container">
+    <tr th:if="${candles.empty}">
+      <td colspan="2"> No Items Available</td>
+    </tr>
+<!--    <tr class ="table-row-items" th:each="candle : ${candles}">-->
+<!--      <td>-->
+<!--        <div class="card" style="width: 18rem;">-->
+<!--          <img class="card-img-top" th:src="@{/img/{id}.jpg(id=${candle.getCoverImage().getId()})}"-->
+<!--               alt="Card image cap">-->
+<!--          <div class="card-body">-->
+<!--            <h5 class="card-title" th:text="${item.title}"></h5>-->
+<!--            <p class="card-text">Author: <span th:text="${item.author}"></span></p>-->
+<!--            <p class="card-text">Description: <span th:text="${item.description}"></span></p>-->
+<!--            <p class="card-text">Price: <span th:text="${item.price}"></span>$</p>-->
+<!--          </div>-->
+
+
+<!--          <button style="margin-top: 10px" type="submit"-->
+<!--                  class="btn btn-primary">Add to Shopping List-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </td>-->
+<!--    </tr>-->
+    </tbody>
+  </table>
+
+
+</div>
+</body>
+</html>
