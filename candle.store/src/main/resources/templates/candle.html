@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="mainBody" style="display: flex; justify-content: center;">
+  <div th:if="${param.error}">
+    <div class="alert alert-danger">Cannot save item.</div>
+  </div>
+
+  <form style="width: 50%"
+        method="post"
+        th:action="@{/candle/save}"
+        class="form-horizontal"
+        role="form"
+        th:object="${candle}"
+        enctype="multipart/form-data"
+  >
+
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('title')}">Please fill mandatory fields</p>
+
+    <div class="form-group">
+      <label for="title">Title<span>&#42;</span></label>
+      <input type="text" class="form-control"
+             id="title"
+             name="title"
+             aria-describedby="titleHelp" placeholder="Enter title">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control"
+             id="description"
+             name="description"
+             placeholder="Description">
+    </div>
+    <div class="form-group">
+      <label for="price">Price<span>&#42;</span></label>
+      <input type="number" name="price"
+             class="form-control"
+             id="price"
+             placeholder="Price">
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Quantity<span>&#42;</span></label>
+
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('quantity')}">Quantity should be greater then 0</p>
+
+
+      <input type="number" name="quantity"
+             class="form-control"
+             id="quantity"
+             placeholder="Quantity"
+             onfocus="this.placeholder = 'Quantity'" onblur="this.placeholder = 'Quantity'">
+    </div>
+
+    <div class="form-group">
+      <label for="coverImage">Cover Image</label>
+      <input type="file" class="form-control" id="coverImage" name="coverImage">
+    </div>
+
+    <div style="text-align: center; margin-top: 10px">
+      <button type="submit" class="btn btn-primary">Save Item</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
