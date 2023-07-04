@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="mainBody">
+
+
+  <div class="col-25">
+    <div class="container">
+      <h4>Cart
+        <span style="color:black">
+        </span>
+      </h4>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item:${shoppingCartDto.items}">
+          <td>
+            <div>
+
+              <p th:text="${item.name}"></p>
+
+            </div>
+          </td>
+          <td>
+            <h5 th:text="${'$'+item.price}"></h5>
+          </td>
+          <td>
+            <div>
+              <input th:value="${item.quantity}" readonly type="text" name="qty" id="sst"
+                     maxlength="12" value="1" title="Quantity:"
+              >
+            </div>
+          </td>
+          <td>
+            <h5 th:text="${'$'+item.total}"></h5>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <hr>
+
+      <div>
+        <h5>Subtotal</h5>
+        <h5 th:text="${'$'+shoppingCartDto.subTotal}"></h5>
+      </div>
+      <hr>
+
+      <div>
+        <a href="/items">Continue Shopping</a>
+        <a href="/checkout">Proceed to checkout</a>
+      </div>
+    </div>
+    <hr>
+
+  </div>
+</div>
+</body>
+</html>

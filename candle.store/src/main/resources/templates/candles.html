@@ -28,9 +28,15 @@
                     </div>
 
 
-                    <button style="margin-top: 10px" type="submit"
-                            class="btn btn-primary">Add to Shopping List
-                    </button>
+                    <form th:object="${chosenCandleDto}" th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
+                          method="post">
+                        <label for="quantity">Quantity:</label>
+                        <input th:field="*{quantity}" type="number" name="quantity" id="quantity" size="2" maxlength="12"
+                               value="1" title="Quantity:" class="input-text qty">
+                        <button style="margin-top: 10px" type="submit"
+                                class="btn btn-primary">Add to Shopping List
+                        </button>
+                    </form>
                 </div>
             </td>
         </tr>
