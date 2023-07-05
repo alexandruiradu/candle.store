@@ -25,26 +25,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item:${shoppingCartDto.items}">
+        <tr th:each="candle:${shoppingCartDto.candles}">
           <td>
             <div>
 
-              <p th:text="${item.name}"></p>
+              <p th:text="${candle.name}"></p>
 
             </div>
           </td>
           <td>
-            <h5 th:text="${'$'+item.price}"></h5>
+            <h5 th:text="${'$'+candle.price}"></h5>
           </td>
           <td>
             <div>
-              <input th:value="${item.quantity}" readonly type="text" name="qty" id="sst"
+              <input th:value="${candle.quantity}" readonly type="text" name="qty" id="sst"
                      maxlength="12" value="1" title="Quantity:"
               >
             </div>
           </td>
           <td>
-            <h5 th:text="${'$'+item.total}"></h5>
+            <h5 th:text="${'$'+candle.total}"></h5>
           </td>
         </tr>
         </tbody>
@@ -58,7 +58,7 @@
       <hr>
 
       <div>
-        <a href="/items">Continue Shopping</a>
+        <a href="/candles">Continue Shopping</a>
         <a href="/checkout">Proceed to checkout</a>
       </div>
     </div>

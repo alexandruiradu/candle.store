@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout products</title>
+</head>
+<body>
+<!--================Checkout Area =================-->
+<section id="mainBody" class="">
+  <div class="container">
+    <form th:object="${userDetailsDto}" action="/sendOrder" method="post">
+      <div >
+        <div>
+          <div>
+            <h3>Billing Details</h3>
+            <div>
+              <div class="col-md-12 form-group">
+                <label for="fullName">Full Name</label>
+                <input readonly type="text" class="form-control" id="fullName"
+                       th:value="${userDetailsDto.fullName}">
+              </div>
+              <div class="col-md-12 form-group p_star">
+                <label for="address">Address</label>
+                <input readonly type="text" class="form-control" id="address"
+                       th:value="${userDetailsDto.address}">
+              </div>
+              <hr>
+              <div>
+                <div>
+                  <h3>Shipping Details</h3>
+                  <input type="checkbox" id="f-option3" name="selector">
+                  <label for="f-option3">Ship to a different address?</label>
+                </div>
+                <textarea th:field="*{shippingAddress}" class="form-control" name="message" id="message"
+                          rows="1"
+                          placeholder="Shipping Address"></textarea>
+              </div>
+              <hr>
+              <div>
+                <div >
+                  <h2>Your Order</h2>
+
+                  <h4>Product <span>Total</span></h4>
+                  <ul >
+                    <li th:each="candle:${shoppingCartDto.candles}">
+                      <a href="#"><span  th:text="${candle.name}"></span> <span
+                              th:text="${'x' + candle.quantity}"></span> <span
+
+                              th:text="${'$'+candle.total}"></span></a>
+                    </li>
+                  </ul>
+
+                  <p>Subtotal <span th:text="${'$'+shoppingCartDto.subTotal}"></span></p>
+                  <p>Shipping <span>Flat rate: $50.00</span></p>
+                  <p>Total <span th:text="${'$'+shoppingCartDto.total}"></span></p>
+
+                  <div>
+                    <button style=" margin-top: 10px" type="submit"
+                            class="btn btn-primary">Send order
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<!--================End Checkout Area =================-->
+</body>
+</html>
