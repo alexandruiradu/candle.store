@@ -30,6 +30,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/img/**").permitAll()
                         .requestMatchers("/register/**").permitAll()
                         .requestMatchers("/users").hasRole("ADMIN")
                         .anyRequest().authenticated()

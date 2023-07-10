@@ -2,69 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{template(~{::#mainBody})}">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
 <div id="mainBody">
 
 
-  <div class="col-25">
-    <div class="container">
-      <h4>Cart
-        <span style="color:black">
+    <div class="col-25">
+        <div class="container">
+            <h4>Cart
+                <span style="color:black">
         </span>
-      </h4>
-      <table class="table">
-        <thead>
-        <tr>
-          <th scope="col">Product</th>
-          <th scope="col">Price</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="candle:${shoppingCartDto.candles}">
-          <td>
+            </h4>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="candle:${shoppingCartDto.candles}">
+                    <td>
+                        <div>
+
+                            <p th:text="${candle.name}"></p>
+
+                        </div>
+                    </td>
+                    <td>
+                        <h5 th:text="${'$'+candle.price}"></h5>
+                    </td>
+                    <td>
+                        <div>
+                            <input th:value="${candle.quantity}" readonly type="text" name="qty" id="sst"
+                                   maxlength="12" value="1" title="Quantity:"
+                            >
+                        </div>
+                    </td>
+                    <td>
+                        <h5 th:text="${'$'+candle.total}"></h5>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <hr>
+
             <div>
-
-              <p th:text="${candle.name}"></p>
-
+                <h5>Subtotal</h5>
+                <h5 th:text="${'$'+shoppingCartDto.subTotal}"></h5>
             </div>
-          </td>
-          <td>
-            <h5 th:text="${'$'+candle.price}"></h5>
-          </td>
-          <td>
-            <div>
-              <input th:value="${candle.quantity}" readonly type="text" name="qty" id="sst"
-                     maxlength="12" value="1" title="Quantity:"
-              >
+            <hr>
+
+            <div style="display: flex; justify-content: space-between;">
+                <a role="button" href="/" th:href="@{/candles}" class="btn btn-primary">Continue Shopping</a>
+                <a role="button" href="/" th:href="@{/checkout}" class="btn btn-primary">Proceed to Checkout</a>
             </div>
-          </td>
-          <td>
-            <h5 th:text="${'$'+candle.total}"></h5>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <hr>
+        </div>
+        <hr>
 
-      <div>
-        <h5>Subtotal</h5>
-        <h5 th:text="${'$'+shoppingCartDto.subTotal}"></h5>
-      </div>
-      <hr>
-
-      <div>
-        <a href="/candles">Continue Shopping</a>
-        <a href="/checkout">Proceed to checkout</a>
-      </div>
     </div>
-    <hr>
-
-  </div>
 </div>
 </body>
 </html>
