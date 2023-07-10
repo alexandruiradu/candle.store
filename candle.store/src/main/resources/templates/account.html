@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{template(~{::#mainBody})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="mainBody">
+    <div class="container text-white bg-dark mb-3">
+
+        <div class="card-header">Account</div>
+        <div class="card-body">
+            <h5 class="card-title">Order history</h5>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Shipping Address</th>
+                    <th scope="col">Items</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="customerOrder : ${user.getCustomerOrder()}">
+                    <td>
+                        <div>
+                            <p th:text="${customerOrder.getCustomerOrderId()}"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <p th:text="${customerOrder.getShippingAddress()}"></p>
+                        </div>
+                    </td>
+                    <td>
+                        <div th:each="chosenCandles : ${customerOrder.getChosenCandles()}">
+                            <p th:text="${chosenCandles.getCandle()}"></p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+<!--            <div style="display: flex" th:each="customerOrder : ${user.getCustomerOrder()}">-->
+<!--                <p class="card-text"><span th:text="${customerOrder.getCustomerOrderId()}"></span></p>-->
+<!--                <p class="card-text"><span th:text="${customerOrder.getShippingAddress()}"></span></p>-->
+<!--                <p class="card-text" th:each="chosenCandles : ${customerOrder.getChosenCandles()}">-->
+<!--                    <span th:text="${chosenCandles.getCandle()}"></span>-->
+<!--                </p>-->
+<!--            </div>-->
+
+            <h5 class="card-title">Account Details</h5>
+            <div style="display: flex; flex-direction: column ">
+                <p class="card-text">Name: <span th:text="${user.getFullName()}"></span></p>
+                <p class="card-text">Email: <span th:text="${user.getEmail()}"></span></p>
+                <p class="card-text">Address: <span th:text="${user.getAddress()}"></span></p>
+            </div>
+
+            <div style="display: flex; justify-content: center; align-content: center;">
+                <a style="margin-top: 10px" role="button" href="/" th:href="@{/user/details}" class="btn btn-light">Edit
+                    Details</a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

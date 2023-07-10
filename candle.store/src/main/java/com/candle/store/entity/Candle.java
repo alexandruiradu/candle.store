@@ -3,6 +3,7 @@ package com.candle.store.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -22,4 +23,10 @@ public class Candle {
     private FileCover fileCover;
     @OneToMany(mappedBy = "candle")
     private List<ChosenCandle> chosenCandles;
+
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }

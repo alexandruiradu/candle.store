@@ -1,32 +1,43 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:fragment="layout (mainBody)" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <base href="/" />
+    <base href="/"/>
     <title>Title</title>
 
-    <link rel="stylesheet" th:href="@{/css/style.css}" >
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
 
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Item Store</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto" style ="display: flex; justify-content: space-between; width: 100%;">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/candles">Home <span class="sr-only">(current)</span></a>
+            <ul class="navbar-nav mr-auto" style="display: flex; justify-content: space-between; width: 100%;">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                        Menu
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/candles">Home</a>
+                        <a class="dropdown-item" href="#">Ritual Candles</a>
+                        <a class="dropdown-item" href="#">Scented Candles</a>
+                    </div>
+                </div>
+
+
+                <a class="navbar-brand" href="#">
+                    <img src="../static/img/image.jpg" height="35" width="150" th:src="@{img/image.jpg}"
+                         alt="Sample image"/>
+                </a>
+                <li sec:authorize="isAuthenticated()" class="nav-item" style="display: flex;">
+                    <a class="nav-link" href="/user/account">My Account </a>
+                    <a class="nav-link" href="/cart">Shopping Cart </a>
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="/cart">Checkout </a>
-                </li>
+
 
             </ul>
 

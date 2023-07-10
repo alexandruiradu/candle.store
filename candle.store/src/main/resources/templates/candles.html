@@ -13,30 +13,46 @@
     </div>
     <table class="table-items">
         <tbody class="items-container">
-        <tr th:if="${candles.empty}">
+        <tr th:if="${candles.isEmpty()}">
             <td colspan="2"> No Items Available</td>
         </tr>
         <tr class="table-row-items" th:each="candle : ${candles}">
             <td>
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" th:src="@{/img/{id}.jpg(id=${candle.getFileCover().getId()})}"
+                <div class="card" style="width: 20rem; height: fit-content;">
+                    <img class="card-img-top" style=" height: 173.663px"
+                         th:src="@{/img/{id}.jpg(id=${candle.getFileCover().getId()})}"
                          alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${candle.getTitle()}"></h5>
                         <p class="card-text">Description: <span th:text="${candle.getDescription()}"></span></p>
                         <p class="card-text">Price: <span th:text="${candle.getPrice()}"></span>$</p>
+
+                        <form th:object="${chosenCandleDto}"
+                              th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
+                              method="post">
+                            <label for="quantity">Quantity:</label>
+                            <input th:field="*{quantity}" type="number" placeholder="0" name="quantity" id="quantity"
+                                   size="2"
+                                   maxlength="12"
+                                   value="1" title="Quantity:" class="input-text qty">
+                            <div style="display: flex; align-content: center; justify-content: center;">
+                                <button style="margin-top: 10px; width: 100%" type="submit"
+                                        class="btn btn-primary">Add to Cart
+                                </button>
+
+
+                            </div>
+                        </form>
+
+                        <form th:object="${candle}"
+                              th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
+                        >
+                            <button style="margin-top: 10px;width: 100% " type="submit"
+                                    class="btn btn-primary">Edit Candle
+                            </button>
+                        </form>
                     </div>
 
-
-                    <form th:object="${chosenCandleDto}" th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
-                          method="post">
-                        <label for="quantity">Quantity:</label>
-                        <input th:field="*{quantity}" type="number" name="quantity" id="quantity" size="2" maxlength="12"
-                               value="1" title="Quantity:" class="input-text qty">
-                        <button style="margin-top: 10px" type="submit"
-                                class="btn btn-primary">Add to Shopping List
-                        </button>
-                    </form>
                 </div>
             </td>
         </tr>

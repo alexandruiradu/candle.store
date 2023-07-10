@@ -136,4 +136,29 @@ public class CandleController {
 
         return "confirmation";
     }
+
+    @GetMapping("/candle/{candleId}")
+    public String viewCandle(
+            @PathVariable(value = "candleId") String candleId,
+            Model model) {
+        Candle foundCandle = candleService.findById(candleId);
+        model.addAttribute(foundCandle);
+
+        return "candle-update";
+    }
+
+    @PutMapping("/candle/update")
+    public String updateCandle(
+            @ModelAttribute("candle") Candle candle,
+            Model model,
+            BindingResult bindingResult,
+            @RequestParam("coverImage") MultipartFile file) throws IOException {
+        model.addAttribute("candle", candle);
+        candleService.updateCandle(candle, file);
+        List<Candle> candles = candleService.getAllCandles();
+        model.addAttribute("candles", candles);
+        ChosenCandleDto chosenCandleDto = ChosenCandleDto.builder().build();
+        model.addAttribute("chosenCandleDto", chosenCandleDto);
+        return "redirect:/candles";
+    }
 }

@@ -4,12 +4,14 @@ import com.candle.store.dto.UserDto;
 import com.candle.store.service.UserService;
 import com.candle.store.service.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 public class AuthController {
@@ -46,4 +48,5 @@ public class AuthController {
         userService.saveUser(userDto);
         return "redirect:/login";
     }
+
 }
