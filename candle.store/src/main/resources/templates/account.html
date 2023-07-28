@@ -33,32 +33,24 @@
                         </div>
                     </td>
                     <td>
-                        <div th:each="chosenCandles : ${customerOrder.getChosenCandles()}">
-                            <p th:text="${chosenCandles.getCandle()}"></p>
+                        <div style="display: flex" th:each="chosenCandles : ${customerOrder.getChosenCandles()}">
+                            <p th:text="${chosenCandles.getCandle()} + ' x' "></p>
+                            <p th:text="${chosenCandles.getChosenQuantity()}"></p>
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
 
-
-<!--            <div style="display: flex" th:each="customerOrder : ${user.getCustomerOrder()}">-->
-<!--                <p class="card-text"><span th:text="${customerOrder.getCustomerOrderId()}"></span></p>-->
-<!--                <p class="card-text"><span th:text="${customerOrder.getShippingAddress()}"></span></p>-->
-<!--                <p class="card-text" th:each="chosenCandles : ${customerOrder.getChosenCandles()}">-->
-<!--                    <span th:text="${chosenCandles.getCandle()}"></span>-->
-<!--                </p>-->
-<!--            </div>-->
-
             <h5 class="card-title">Account Details</h5>
             <div style="display: flex; flex-direction: column ">
-                <p class="card-text">Name: <span th:text="${user.getFullName()}"></span></p>
-                <p class="card-text">Email: <span th:text="${user.getEmail()}"></span></p>
-                <p class="card-text">Address: <span th:text="${user.getAddress()}"></span></p>
+                <p class="card-text" style="width: 100%">Name: <span th:text="${user.getFullName()}"></span></p>
+                <p class="card-text" style="width: 100%">Email: <span th:text="${user.getEmail()}"></span></p>
+                <p class="card-text" style="width: 100%">Address: <span th:text="${user.getAddress()}"></span></p>
             </div>
 
             <div style="display: flex; justify-content: center; align-content: center;">
-                <a style="margin-top: 10px" role="button" href="/" th:href="@{/user/details}" class="btn btn-light">Edit
+                <a style="margin-top: 33px; width: 100%" role="button" href="/" th:href="@{/user/details}" class="btn btn-light">Edit
                     Details</a>
             </div>
 

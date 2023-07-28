@@ -12,30 +12,22 @@
 <body>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg" style="background-color: #1c2331;">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="display: flex; justify-content: space-between; width: 100%;">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                            aria-expanded="false">
-                        Menu
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/candles">Home</a>
-                        <a class="dropdown-item" href="#">Ritual Candles</a>
-                        <a class="dropdown-item" href="#">Scented Candles</a>
-                    </div>
-                </div>
-
+                <a class="nav-link" href="/candles" style="color: white">Home</a>
 
                 <a class="navbar-brand" href="#">
                     <img src="../static/img/image.jpg" height="35" width="150" th:src="@{img/image.jpg}"
                          alt="Sample image"/>
                 </a>
+                <div sec:authorize="!isAuthenticated()">
+
+                </div>
                 <li sec:authorize="isAuthenticated()" class="nav-item" style="display: flex;">
-                    <a class="nav-link" href="/user/account">My Account </a>
-                    <a class="nav-link" href="/cart">Shopping Cart </a>
-                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                    <a class="nav-link" href="/user/account" style="color: white">My Account </a>
+                    <a class="nav-link" href="/cart" style="color: white">Shopping Cart </a>
+                    <a class="nav-link" th:href="@{/logout}" style="color: white">Logout</a>
                 </li>
 
 
@@ -72,9 +64,10 @@
                             style="width: 60px; background-color: #7c4dff; height: 2px"
                     />
                     <p>
-                        Here you can use rows and columns to organize your footer
-                        content. Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit.
+                        We aspire to provide you with the best
+                        scented candle experience you can get.
+                        We also provide a various choice of
+                        witchy candles if you are interested.
                     </p>
                 </div>
                 <!-- Grid column -->
@@ -87,10 +80,10 @@
                             class="mb-4 mt-0 d-inline-block mx-auto"
                             style="width: 60px; background-color: #7c4dff; height: 2px"
                     />
-                    <p> New York, NY 10012, US</p>
-                    <p> info@example.com</p>
-                    <p> + 01 234 567 88</p>
-                    <p> + 01 234 567 89</p>
+                    <p> Bucharest, Some Place in Buc, RO</p>
+                    <p> our.email@example.com</p>
+                    <p> +4 072 0123 0438</p>
+                    <p> +4 072 6437 5436</p>
                 </div>
                 <!-- Grid column -->
             </div>

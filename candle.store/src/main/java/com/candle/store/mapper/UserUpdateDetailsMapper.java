@@ -4,16 +4,12 @@ import com.candle.store.dto.UserUpdateDetailsDto;
 import com.candle.store.entity.User;
 import com.candle.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
 public class UserUpdateDetailsMapper {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;

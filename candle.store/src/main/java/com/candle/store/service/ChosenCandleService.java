@@ -15,15 +15,16 @@ import java.util.Optional;
 @Service
 public class ChosenCandleService {
 
-    @Autowired
-    private ChosenCandleRepository chosenCandleRepository;
+    private final ChosenCandleRepository chosenCandleRepository;
+    private final CandleRepository candleRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    private CandleRepository candleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    public ChosenCandleService(ChosenCandleRepository chosenCandleRepository, CandleRepository candleRepository, UserRepository userRepository) {
+        this.chosenCandleRepository = chosenCandleRepository;
+        this.candleRepository = candleRepository;
+        this.userRepository = userRepository;
+    }
 
     public void saveChosenCandle(ChosenCandleDto chosenCandleDto, String candleId, String email) {
         ChosenCandle chosenCandle = buildProduct(chosenCandleDto, candleId, email);

@@ -1,6 +1,7 @@
 package com.candle.store.controller;
 
 
+import com.candle.store.dto.UserEmailDto;
 import com.candle.store.dto.UserUpdateDetailsDto;
 import com.candle.store.entity.User;
 import com.candle.store.service.UserService;
@@ -12,8 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
@@ -51,6 +51,28 @@ public class UserController {
         userService.updateUserDetails(userUpdateDetailsDto, email);
 
         return "redirect:/logout";
+    }
+
+    @GetMapping("/email")
+    public String viewEmail(Model model) {
+        UserEmailDto userEmailDto = new UserEmailDto();
+        model.addAttribute("userEmailDto", userEmailDto);
+
+        return "email";
+    }
+
+    @PostMapping("/user/email")
+    public String validateEmail(
+            @ModelAttribute("userEmailDto") UserEmailDto userEmailDto,
+            Model model) {
+        User user = userService.findUserByEmail(userEmailDto.getEmail());
+        if (user != null) {
+            userService.updateUserPassword(user, userEmailDto);
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "Invalid email address!");
+            return "email";
+        }
     }
 }
 

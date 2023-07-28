@@ -1,13 +1,12 @@
 package com.candle.store.service;
 
-import com.candle.store.dto.UserDetailsDto;
-import com.candle.store.dto.UserDto;
-import com.candle.store.dto.UserUpdateDetailsDto;
+import com.candle.store.dto.*;
 import com.candle.store.entity.User;
 import com.candle.store.mapper.UserMapper;
 import com.candle.store.mapper.UserUpdateDetailsMapper;
 import com.candle.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,15 +14,19 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserUpdateDetailsMapper userUpdateDetailsMapper;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserUpdateDetailsMapper userUpdateDetailsMapper;
-
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, UserMapper userMapper, UserUpdateDetailsMapper userUpdateDetailsMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+        this.userUpdateDetailsMapper = userUpdateDetailsMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public void saveUser(UserDto userDto) {
         User user = userMapper.map(userDto);
@@ -55,10 +58,14 @@ public class UserService {
         return userUpdateDetailsDto;
     }
 
-    public User findUserByEmail(String email){
+    public User findUserByEmail(String email) {
         Optional<User> userOptional = userRepository.findByEmail(email);
-        User user = userOptional.get();
+        return userOptional.orElse(null);
 
-        return user;
+    }
+
+    public void updateUserPassword(User user, UserEmailDto userEmailDto) {
+        user.setPassword(passwordEncoder.encode(userEmailDto.getPassword()));
+        userRepository.save(user);
     }
 }
