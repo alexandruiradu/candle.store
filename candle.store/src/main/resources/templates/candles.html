@@ -9,10 +9,10 @@
 <div id="mainBody">
     <div sec:authorize="hasRole('ADMIN')"
          style="text-align: center; margin: 10px">
-        <a role="button" href="/" th:href="@{/candle}" class="btn btn-primary">Add Candle</a>
+        <a role="button" href="/" th:href="@{/candle}" class="btn btn-dark">Add Candle</a>
     </div>
     <table class="table-items">
-        <tbody class="items-container">
+        <tbody class="items-container" style="display: flex; align-content: center; justify-content: center;">
         <tr th:if="${candles.isEmpty()}">
             <td colspan="2"> No Items Available</td>
         </tr>
@@ -37,18 +37,18 @@
                                    value="1" title="Quantity:" class="input-text qty">
                             <div style="display: flex; align-content: center; justify-content: center;">
                                 <button style="margin-top: 10px; width: 100%" type="submit"
-                                        class="btn btn-primary">Add to Cart
+                                        class="btn btn-dark">Add to Cart
                                 </button>
 
 
                             </div>
                         </form>
 
-                        <form th:object="${candle}"
+                        <form sec:authorize="hasRole('ADMIN')" th:object="${candle}"
                               th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
                         >
                             <button style="margin-top: 10px;width: 100% " type="submit"
-                                    class="btn btn-primary">Edit Candle
+                                    class="btn btn-dark">Edit Candle
                             </button>
                         </form>
                     </div>

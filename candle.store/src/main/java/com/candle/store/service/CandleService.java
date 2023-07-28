@@ -2,18 +2,14 @@ package com.candle.store.service;
 
 import com.candle.store.dto.CandleDto;
 import com.candle.store.entity.Candle;
-import com.candle.store.entity.FileCover;
 import com.candle.store.mapper.CandleMapper;
 import com.candle.store.repository.CandleRepository;
-import com.candle.store.repository.FileCoverRepository;
+import com.candle.store.util.FileParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,16 +17,16 @@ import java.util.Optional;
 @Service
 public class CandleService {
 
-    private static final String DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/img/";
+    private final FileParser fileParser;
+    private final CandleRepository candleRepository;
+    private final CandleMapper candleMapper;
 
     @Autowired
-    private CandleRepository candleRepository;
-
-    @Autowired
-    private CandleMapper candleMapper;
-
-    @Autowired
-    private FileCoverRepository fileCoverRepository;
+    public CandleService(CandleRepository candleRepository, CandleMapper candleMapper, FileParser fileParser) {
+        this.candleRepository = candleRepository;
+        this.candleMapper = candleMapper;
+        this.fileParser = fileParser;
+    }
 
     public List<Candle> getAllCandles() {
         return candleRepository.findAll();
@@ -50,20 +46,6 @@ public class CandleService {
     }
 
     public void updateCandle(Candle candle, MultipartFile file) throws IOException {
-        Path fileName = Paths.get(DIRECTORY);
-        FileCover fileCover = new FileCover();
-        fileCover.setPath(fileName.toFile().getPath());
-        FileCover fileSaved = fileCoverRepository.save(fileCover);
-
-        final String fileExtension = Optional.ofNullable(file.getOriginalFilename())
-                .flatMap(CandleService::getFileExtension)
-                .orElse("");
-
-        final String targetFileName = fileSaved.getId() + "." + fileExtension;
-        final Path targetPath = fileName.resolve(targetFileName);
-
-        File f = new File(String.valueOf(targetPath));
-        file.transferTo(f);
 
         Optional<Candle> candle1 = candleRepository.findById(candle.getId());
         if (candle1.isPresent()) {
@@ -71,19 +53,9 @@ public class CandleService {
             candle1.get().setDescription(candle.getDescription());
             candle1.get().setPrice(candle.getPrice());
             candle1.get().setQuantity(candle.getQuantity());
-            candle1.get().setFileCover(fileSaved);
+            candle1.get().setFileCover(fileParser.getFile(file));
 
             candleRepository.save(candle1.get());
-        }
-    }
-
-    private static Optional<String> getFileExtension(String fileName) {
-        final int indexOfLastDot = fileName.lastIndexOf('.');
-
-        if (indexOfLastDot == -1) {
-            return Optional.empty();
-        } else {
-            return Optional.of(fileName.substring(indexOfLastDot + 1));
         }
     }
 

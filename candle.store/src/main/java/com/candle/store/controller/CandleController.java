@@ -20,25 +20,22 @@ import java.util.List;
 
 @Controller
 public class CandleController {
+    private final CandleService candleService;
+    private final CandleValidator candleValidator;
+    private final ChosenCandleService chosenCandleService;
+    private final ShoppingCartService shoppingCartService;
+    private final UserService userService;
+    private final CustomerOrderService customerOrderService;
 
     @Autowired
-    private CandleService candleService;
-
-    @Autowired
-    private CandleValidator candleValidator;
-
-    @Autowired
-    private ChosenCandleService chosenCandleService;
-
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CustomerOrderService customerOrderService;
-
+    public CandleController(CandleService candleService, CandleValidator candleValidator, ChosenCandleService chosenCandleService, ShoppingCartService shoppingCartService, UserService userService, CustomerOrderService customerOrderService) {
+        this.candleService = candleService;
+        this.candleValidator = candleValidator;
+        this.chosenCandleService = chosenCandleService;
+        this.shoppingCartService = shoppingCartService;
+        this.userService = userService;
+        this.customerOrderService = customerOrderService;
+    }
 
     @GetMapping("/")
     public String viewTemplate(Model model) {
@@ -161,4 +158,6 @@ public class CandleController {
         model.addAttribute("chosenCandleDto", chosenCandleDto);
         return "redirect:/candles";
     }
+
+
 }

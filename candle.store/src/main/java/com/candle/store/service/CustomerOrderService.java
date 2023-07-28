@@ -16,17 +16,17 @@ import java.util.Optional;
 @Service
 public class CustomerOrderService {
 
-    @Autowired
-    private CustomerOrderRepository customerOrderRepository;
+    private final CustomerOrderRepository customerOrderRepository;
+    private final UserRepository userRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final ChosenCandleRepository chosenCandleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
-
-    @Autowired
-    private ChosenCandleRepository chosenCandleRepository;
+    public CustomerOrderService(CustomerOrderRepository customerOrderRepository, UserRepository userRepository, ShoppingCartRepository shoppingCartRepository, ChosenCandleRepository chosenCandleRepository) {
+        this.customerOrderRepository = customerOrderRepository;
+        this.userRepository = userRepository;
+        this.shoppingCartRepository = shoppingCartRepository;
+        this.chosenCandleRepository = chosenCandleRepository;
+    }
 
     public void addCustomerOrder(String email, String shippingAddress) {
         Optional<User> user = userRepository.findByEmail(email);

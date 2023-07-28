@@ -14,12 +14,14 @@ import java.util.Optional;
 
 @Component
 public class UserMapper {
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RoleRepository roleRepository;
+    public UserMapper(PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+    }
 
     public User map(UserDto userDto) {
         User user = new User();
