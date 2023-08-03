@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class ShoppingCartCandleDto {
 
+    private Integer id;
     private String name;
     private String price;
     private String quantity;

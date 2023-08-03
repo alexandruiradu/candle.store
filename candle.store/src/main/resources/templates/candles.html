@@ -9,7 +9,7 @@
 <div id="mainBody">
     <div sec:authorize="hasRole('ADMIN')"
          style="text-align: center; margin: 10px">
-        <a role="button" href="/" th:href="@{/candle}" class="btn btn-dark">Add Candle</a>
+        <a role="button" href="/" th:href="@{/candle}" class="btn btn-dark" style="background-color: #1c2331; border-color: #1c2331;">Add Candle</a>
     </div>
     <table class="table-items">
         <tbody class="items-container" style="display: flex; align-content: center; justify-content: center;">
@@ -31,12 +31,13 @@
                               th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
                               method="post">
                             <label for="quantity">Quantity:</label>
+                            <p class="alert alert-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
                             <input th:field="*{quantity}" type="number" placeholder="0" name="quantity" id="quantity"
                                    size="2"
                                    maxlength="12"
                                    value="1" title="Quantity:" class="input-text qty">
                             <div style="display: flex; align-content: center; justify-content: center;">
-                                <button style="margin-top: 10px; width: 100%" type="submit"
+                                <button style="margin-top: 10px; width: 100%; background-color: #1c2331; border-color: #1c2331;" type="submit"
                                         class="btn btn-dark">Add to Cart
                                 </button>
 
@@ -47,7 +48,7 @@
                         <form sec:authorize="hasRole('ADMIN')" th:object="${candle}"
                               th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
                         >
-                            <button style="margin-top: 10px;width: 100% " type="submit"
+                            <button style="margin-top: 10px;width: 100%;background-color: #1c2331; border-color: #1c2331; " type="submit"
                                     class="btn btn-dark">Edit Candle
                             </button>
                         </form>

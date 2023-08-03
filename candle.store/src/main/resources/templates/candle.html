@@ -20,11 +20,12 @@
         enctype="multipart/form-data"
   >
 
-    <p class="alert alert-danger" th:if="${#fields.hasErrors('title')}">Please fill mandatory fields</p>
-
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
     <div class="form-group">
       <label for="title">Title<span>&#42;</span></label>
-      <input type="text" class="form-control"
+      <input type="text"
+             th:field="*{title}"
+             class="form-control"
              id="title"
              name="title"
              aria-describedby="titleHelp" placeholder="Enter title">
@@ -37,9 +38,12 @@
              name="description"
              placeholder="Description">
     </div>
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
     <div class="form-group">
       <label for="price">Price<span>&#42;</span></label>
-      <input type="number" name="price"
+      <input type="number"
+             th:field="*{price}"
+             name="price"
              class="form-control"
              id="price"
              placeholder="Price">
@@ -47,11 +51,10 @@
 
     <div class="form-group">
       <label for="quantity">Quantity<span>&#42;</span></label>
-
-      <p class="alert alert-danger" th:if="${#fields.hasErrors('quantity')}">Quantity should be greater then 0</p>
-
-
-      <input type="number" name="quantity"
+      <p class="alert alert-danger" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></p>
+      <input type="number"
+             th:field="*{quantity}"
+             name="quantity"
              class="form-control"
              id="quantity"
              placeholder="Quantity"
@@ -64,7 +67,7 @@
     </div>
 
     <div style="text-align: center; margin-top: 10px">
-      <button type="submit" class="btn btn-primary">Save Item</button>
+      <button type="submit" class="btn btn-primary" style="background-color: #1c2331; border-color: #1c2331;">Save Item</button>
     </div>
   </form>
 </div>

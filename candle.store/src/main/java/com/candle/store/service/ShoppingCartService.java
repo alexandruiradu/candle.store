@@ -23,6 +23,7 @@ public class ShoppingCartService {
         for (ChosenCandle chosenCandle : shoppingCart.getChosenCandles()) {
             ShoppingCartCandleDto shoppingCartCandleDto = ShoppingCartCandleDto
                     .builder()
+                    .id(chosenCandle.getId())
                     .name(chosenCandle.getCandle().getTitle())
                     .price(String.valueOf(chosenCandle.getCandle().getPrice()))
                     .quantity(String.valueOf(chosenCandle.getChosenQuantity()))
