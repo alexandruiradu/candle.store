@@ -22,6 +22,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Total</th>
+                    <th scope="col">Remove</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,17 @@
                     <td>
                         <h5 th:text="${'$'+candle.total}"></h5>
                     </td>
+                    <td>
+                        <form th:method="delete"
+                              th:object="${candle}"
+                              th:action="@{/candle/{candleId}(candleId=${candle.getId()})}"
+
+                        >
+                            <button style="margin-top: 10px;width: 100%;background-color: #1c2331; border-color: #1c2331; " type="submit"
+                                    class="btn btn-dark">X
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -58,8 +70,8 @@
             <hr>
 
             <div style="display: flex; justify-content: space-between;">
-                <a role="button" href="/" th:href="@{/candles}" class="btn btn-dark">Continue Shopping</a>
-                <a role="button" href="/" th:href="@{/checkout}" class="btn btn-dark">Proceed to Checkout</a>
+                <a role="button" href="/" th:href="@{/candles}" class="btn btn-dark" style="background-color: #1c2331; border-color: #1c2331;">Continue Shopping</a>
+                <a role="button" href="/" th:href="@{/checkout}" class="btn btn-dark" style="background-color: #1c2331; border-color: #1c2331;">Proceed to Checkout</a>
             </div>
         </div>
         <hr>

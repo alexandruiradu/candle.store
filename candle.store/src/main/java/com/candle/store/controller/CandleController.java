@@ -5,9 +5,9 @@ import com.candle.store.dto.ChosenCandleDto;
 import com.candle.store.dto.ShoppingCartDto;
 import com.candle.store.dto.UserDetailsDto;
 import com.candle.store.entity.Candle;
+import com.candle.store.entity.ChosenCandle;
 import com.candle.store.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,15 +26,17 @@ public class CandleController {
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
     private final CustomerOrderService customerOrderService;
+    private final ChosenCandleValidator chosenCandleValidator;
 
     @Autowired
-    public CandleController(CandleService candleService, CandleValidator candleValidator, ChosenCandleService chosenCandleService, ShoppingCartService shoppingCartService, UserService userService, CustomerOrderService customerOrderService) {
+    public CandleController(CandleService candleService, CandleValidator candleValidator, ChosenCandleService chosenCandleService, ShoppingCartService shoppingCartService, UserService userService, CustomerOrderService customerOrderService, ChosenCandleValidator chosenCandleValidator) {
         this.candleService = candleService;
         this.candleValidator = candleValidator;
         this.chosenCandleService = chosenCandleService;
         this.shoppingCartService = shoppingCartService;
         this.userService = userService;
         this.customerOrderService = customerOrderService;
+        this.chosenCandleValidator = chosenCandleValidator;
     }
 
     @GetMapping("/")
@@ -78,7 +80,7 @@ public class CandleController {
             Model model,
             @RequestParam("coverImage") MultipartFile file
     ) throws IOException {
-        candleValidator.validate(candleDto, bindingResult);
+        candleValidator.validateCandleDto(candleDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("candle", candleDto);
             return "candle";
@@ -100,6 +102,12 @@ public class CandleController {
     ) {
         model.addAttribute("chosenCandleDto", chosenCandleDto);
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        chosenCandleValidator.validate(chosenCandleDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            List<Candle> candles = candleService.getAllCandles();
+            model.addAttribute("candles", candles);
+            return "candles";
+        }
         chosenCandleService.saveChosenCandle(chosenCandleDto, candleId, email);
 
         return "redirect:/cart";
@@ -151,12 +159,28 @@ public class CandleController {
             BindingResult bindingResult,
             @RequestParam("coverImage") MultipartFile file) throws IOException {
         model.addAttribute("candle", candle);
+        candleValidator.validateCandle(candle, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "candle-update";
+        }
         candleService.updateCandle(candle, file);
         List<Candle> candles = candleService.getAllCandles();
         model.addAttribute("candles", candles);
         ChosenCandleDto chosenCandleDto = ChosenCandleDto.builder().build();
         model.addAttribute("chosenCandleDto", chosenCandleDto);
         return "redirect:/candles";
+    }
+
+    @DeleteMapping("/candle/{candleId}")
+    public String removeCandle(
+            @PathVariable(value = "candleId") String candleId,
+            Model model,
+            @ModelAttribute("chosenCandle") ChosenCandle chosenCandle
+    ) {
+        model.addAttribute("chosenCandle", chosenCandle);
+        chosenCandleService.removeChosenCandle(candleId);
+
+        return "redirect:/cart";
     }
 
 

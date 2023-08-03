@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
@@ -24,6 +26,11 @@ public class SecurityConfig {
     @Bean
     public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PersistentTokenRepository tokenRepository() {
+        return new InMemoryTokenRepositoryImpl();
     }
 
     @Bean
@@ -42,6 +49,7 @@ public class SecurityConfig {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
+                                .usernameParameter("username")
                                 .defaultSuccessUrl("/")
                                 .permitAll()
                 )
@@ -49,8 +57,13 @@ public class SecurityConfig {
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
-                );
-        http.csrf().disable();
+                ).rememberMe()
+                        .rememberMeParameter("remember-me")
+                        .tokenRepository(tokenRepository())
+                        .tokenValiditySeconds(86400)
+                .and()
+                .csrf().disable();
+
         return http.build();
     }
 

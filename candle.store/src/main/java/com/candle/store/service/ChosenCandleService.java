@@ -10,6 +10,8 @@ import com.candle.store.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -40,6 +42,28 @@ public class ChosenCandleService {
 
         Optional<User> user = userRepository.findByEmail(email);
         user.ifPresent(value -> chosenCandle.setShoppingCart(value.getShoppingCart()));
+
+//        checkForDup(chosenCandle);
         return chosenCandle;
     }
+
+    public void removeChosenCandle(String candleId) {
+        Optional<ChosenCandle> chosenCandle = chosenCandleRepository.findById(Integer.parseInt(candleId));
+        if (chosenCandle.isPresent()) {
+            ChosenCandle chosenCandleFound = chosenCandle.get();
+            chosenCandleRepository.delete(chosenCandleFound);
+        }
+
+    }
+
+//    private void checkForDup(ChosenCandle chosenCandle) {
+//        List<ChosenCandle> chosenCandles = chosenCandleRepository.findAll();
+//        for (ChosenCandle candle : chosenCandles) {
+//            if (candle.getCandle().equals(chosenCandle.getCandle())
+//                    && candle.getShoppingCart().equals(chosenCandle.getShoppingCart())) {
+//                chosenCandle.setId(candle.getId());
+//            }
+//        }
+//    }
+
 }
